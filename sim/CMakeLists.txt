@@ -1,0 +1,3 @@
+add_library(cachehound_sim INTERFACE)
+target_compile_definitions(cachehound_sim INTERFACE CACHEHOUND_SIM_HEADER_ONLY)
+target_include_directories(cachehound_sim INTERFACE include)

@@ -1,0 +1,7 @@
+.*
+!.gitignore
+cachehound.*
+!cachehound.c
+Module.symvers
+modules.order
+client
