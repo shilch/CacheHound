@@ -7,6 +7,7 @@
 #include "./reverse_info_command.hpp"
 #include "./reverse_placement_command.hpp"
 #include "./reverse_replacement_command.hpp"
+#include "./reverse_hist_command.hpp"
 #if __has_include("./reverse_playground_command.hpp")
 #include "./reverse_playground_command.hpp"
 #endif
@@ -19,6 +20,7 @@ class reverse_command : public multicommand_base<
     reverse_command,
     reverse_placement_command,
     reverse_replacement_command,
+    reverse_hist_command,
 #if __has_include("./reverse_playground_command.hpp")
     reverse_playground_command,
 #endif

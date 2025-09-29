@@ -121,7 +121,7 @@ void cachehound::cli::reverse_command::reverse_command::setup_arguments(argparse
     // TODO: Generalize this
     args.add_argument("--pmu")
         .help("Specify the method of utilizing the PMU in the kernel memory")
-        .choices("intel", "amd-zen2", "rpi5", "a64fx");
+        .choices("intel", "amd-zen2", "rpi5", "a64fx", "a64fx-cycles");
 }
 
 void cachehound::cli::reverse_command::parse_arguments(argparse::ArgumentParser& args) {
@@ -246,7 +246,17 @@ void cachehound::cli::reverse_command::parse_arguments(argparse::ArgumentParser&
                         return 1;
                     return 0;
                 };
-            } else {
+            } else if(pmu_str == "a64fx-cycles") {
+                pmu_events_.push_back(0x0011); // CPU_CYCLES
+
+                pmu_handler_ = [](
+                    std::uint64_t cycles_before, std::uint64_t, std::uint64_t,
+                    std::uint64_t cycles_after, std::uint64_t, std::uint64_t
+                ) {
+                    auto cycles = cycles_after - cycles_before;
+                    return cycles;
+                };
+            } {
                 assert(pmu_str == "a64fx");
 
                 pmu_events_.push_back(0x0003); // L1D_CACHE_REFILL
